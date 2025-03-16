@@ -133,7 +133,7 @@
         <bouncycastle.version>1.78.1</bouncycastle.version>
         <datasafe.version>1.0.3</datasafe.version>
         <liquibase.version>4.29.2</liquibase.version> <!-- On update make sure that relativeToChangelogFile (for loadData) works when using PropertiesLauncher -->
-        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
         <hibernate.version>6.5.3.Final</hibernate.version> <!-- Currently only for bytecode enhancer plugin, can't inherit Spring BOM -->
         <jjwt.version>0.11.2</jjwt.version>
         <nimbus.version>11.23.1</nimbus.version>
@@ -161,7 +161,7 @@
         <jupiter.version>5.10.2</jupiter.version>
         <junit.platform.commons.version>1.5.2</junit.platform.commons.version>
         <surefire.version>3.5.2</surefire.version>
-        <failsafe.version>3.0.0-M5</failsafe.version>
+        <failsafe.version>3.5.2</failsafe.version>
         <assertj.version>3.12.2</assertj.version>
         <jgiven.version>1.1.0</jgiven.version>
         <wiremock.version>3.10.0</wiremock.version>
@@ -455,18 +455,6 @@
                 </configuration>
             </plugin>
 
-            <!-- junit tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.version}</version>
-                <configuration>
-                    <argLine>-Xmx1024m ${surefireArgLine}</argLine>
-                    <trimStackTrace>false</trimStackTrace>
-                    <testFailureIgnore>true</testFailureIgnore>
-                </configuration>
-            </plugin>
-
             <!-- integration tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -492,6 +480,22 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <!-- junit tests -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.version}</version>
+                    <configuration>
+                        <argLine>-Xmx1024m ${surefireArgLine}</argLine>
+                        <trimStackTrace>false</trimStackTrace>
+                        <testFailureIgnore>true</testFailureIgnore>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <reporting>
