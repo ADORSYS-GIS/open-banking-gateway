@@ -8,6 +8,7 @@ import de.adorsys.opba.fintech.server.feignmocks.TppBankSearchClientFeignMock;
 import de.adorsys.opba.tpp.banksearch.api.model.generated.BankProfileResponse;
 import de.adorsys.opba.tpp.banksearch.api.model.generated.BankSearchResponse;
 import de.adorsys.opba.tpp.banksearch.api.resource.generated.TppBankSearchApi;
+import jakarta.servlet.http.Cookie;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,17 +25,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.test.mock.mockito.MockReset;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import jakarta.servlet.http.Cookie;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

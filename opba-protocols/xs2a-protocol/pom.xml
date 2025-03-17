@@ -167,7 +167,7 @@
         <dependency>
             <groupId>jakarta.el</groupId>
             <artifactId>jakarta.el-api</artifactId>
-            <version>6.0.1</version>
+            <version>${jakarta.el-api.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -236,12 +236,6 @@
             <groupId>com.vdurmont</groupId>
             <artifactId>semver4j</artifactId>
             <version>${semver4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.2</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
