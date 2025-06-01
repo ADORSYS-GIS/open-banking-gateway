@@ -3,7 +3,6 @@ package de.adorsys.opba.fintech.impl.controller;
 import de.adorsys.opba.fintech.api.model.generated.InlineResponseBankInfo;
 import de.adorsys.opba.fintech.api.resource.generated.FinTechIbanSearchApi;
 import de.adorsys.opba.fintech.api.model.generated.SearchBankInfoBody;
-import de.adorsys.opba.fintech.impl.mapper.BankInfoMapper;
 import de.adorsys.opba.fintech.impl.service.IbanSearchService;
 import de.adorsys.opba.fintech.impl.service.SessionLogicService;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +31,11 @@ public class FinTechIbanSearchImpl implements FinTechIbanSearchApi {
             log.warn("bankInfoByIbanPOST failed: user is not authorized!");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+         
         InlineResponseBankInfo fintechModel = ibanSearchService.searchByIban(body.getIban());
-
-        return BankInfoMapper.fromTppToFintech(response);
+        
+        return sessionLogicService.addSessionMaxAgeToHeader(
+                new ResponseEntity<>(fintechModel, HttpStatus.OK)
+        );
     }
 }
