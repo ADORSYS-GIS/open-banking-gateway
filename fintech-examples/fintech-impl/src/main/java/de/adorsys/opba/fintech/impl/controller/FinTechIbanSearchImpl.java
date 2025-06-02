@@ -22,18 +22,18 @@ public class FinTechIbanSearchImpl implements FinTechIbanSearchApi {
     private final SessionLogicService sessionLogicService;
 
     @Override
-    public ResponseEntity<InlineResponseBankInfo> bankInfoByIbanPOST(
+    public ResponseEntity<InlineResponseBankInfo> getBankInfoByIban(
             UUID xRequestID,
             String xXsrfToken,
             SearchBankInfoBody body
     ) {
         if (!sessionLogicService.isSessionAuthorized()) {
-            log.warn("bankInfoByIbanPOST failed: user is not authorized!");
+            log.warn("getBankInfoByIban failed: user is not authorized!");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-         
+
         InlineResponseBankInfo fintechModel = ibanSearchService.searchByIban(body.getIban());
-        
+
         return sessionLogicService.addSessionMaxAgeToHeader(
                 new ResponseEntity<>(fintechModel, HttpStatus.OK)
         );

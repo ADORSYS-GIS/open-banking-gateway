@@ -238,7 +238,7 @@ paths:
     post:
       tags:
         - FinTechIbanSearch
-      operationId: bankInfoByIbanPOST
+      operationId: getBankInfoByIban
       summary: Retrieves bank metadata using an IBAN
       description: |
         Takes an IBAN and returns metadata such as bank name, bank code, and BIC.

@@ -4,13 +4,13 @@ import de.adorsys.opba.fintech.api.model.generated.InlineResponseBankInfo;
 import de.adorsys.opba.fintech.impl.controller.utils.RestRequestContext;
 import de.adorsys.opba.fintech.impl.mapper.BankInfoMapper;
 import de.adorsys.opba.fintech.impl.tppclients.TppIbanSearchClient;
-import de.adorsys.opba.tpp.bankinfo.api.model.generated.BankInfoResponse;
+import de.adorsys.opba.tppbankingapi.bankinfo.model.generated.BankInfoResponse;
+import de.adorsys.opba.tppbankingapi.bankinfo.model.generated.V1BankinfoBody;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -23,12 +23,14 @@ public class IbanSearchService {
 
     @SneakyThrows
     public InlineResponseBankInfo searchByIban(String iban) {
-        UUID xRequestId = UUID.fromString(restRequestContext.getRequestId());
+        UUID.fromString(restRequestContext.getRequestId());
 
-        BankInfoResponse response = tppIbanSearchClient.bankInfoByIbanPOST(
-                xRequestId,
-                iban
-        ).getBody();
+        V1BankinfoBody body = new V1BankinfoBody();
+        body.setIban(iban);
+
+        BankInfoResponse response = tppIbanSearchClient
+            .getBankInfoByIban(body)
+            .getBody();
 
         return bankInfoMapper.mapFromTppToFintech(response);
     }
