@@ -484,7 +484,7 @@ paths:
         - $ref: "#/components/parameters/X-XSRF-TOKEN"
 
       security:
-        - sessionCookie: [ ]
+        - sessionCookie: []
       responses:
         "200":
           $ref: "#/components/responses/200_ConsentRemovalResult"
@@ -689,7 +689,14 @@ components:
       schema:
         type: string
         description: json representation of AisConsentRequest object
-        example: {"access":{"allPsd2":"ALL_ACCOUNTS_WITH_BALANCES"},"frequencyPerDay":4,"validUntil":"2021-06-18","recurringIndicator":true,"combinedServiceIndicator":false}
+        example:
+          {
+            "access": { "allPsd2": "ALL_ACCOUNTS_WITH_BALANCES" },
+            "frequencyPerDay": 4,
+            "validUntil": "2021-06-18",
+            "recurringIndicator": true,
+            "combinedServiceIndicator": false,
+          }
 
     X-Request-ID:
       name: X-Request-ID

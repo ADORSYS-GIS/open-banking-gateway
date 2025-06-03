@@ -10,35 +10,19 @@ import org.mapstruct.factory.Mappers;
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 public class ManualMapper {
 
-    public static BankDescriptor fromTppToFintech(
-        de.adorsys.opba.tpp.banksearch.api.model.generated.BankDescriptor tppBankDescriptor
-    ) {
-        return Mappers.getMapper(
-            BankDescriptorMapper.class
-        ).mapFromTppToFintech(tppBankDescriptor);
+    public static BankDescriptor fromTppToFintech(de.adorsys.opba.tpp.banksearch.api.model.generated.BankDescriptor tppBankDescriptor) {
+        return Mappers.getMapper(BankDescriptorMapper.class).mapFromTppToFintech(tppBankDescriptor);
     }
 
-    public static BankProfile fromTppToFintech(
-        BankProfileDescriptor tppBankProfile
-    ) {
-        return Mappers.getMapper(
-            BankProfileDescriptorMapper.class
-        ).mapFromTppToFintech(tppBankProfile);
+    public static BankProfile fromTppToFintech(BankProfileDescriptor tppBankProfile) {
+        return Mappers.getMapper(BankProfileDescriptorMapper.class).mapFromTppToFintech(tppBankProfile);
     }
 
-    public static TransactionsResponse fromTppToFintech(
-        de.adorsys.opba.tpp.ais.api.model.generated.TransactionsResponse transactionsResponse
-    ) {
-        return Mappers.getMapper(
-            TransactionsResponseMapper.class
-        ).mapFromTppToFintech(transactionsResponse);
+    public static TransactionsResponse fromTppToFintech(de.adorsys.opba.tpp.ais.api.model.generated.TransactionsResponse transactionsResponse) {
+        return Mappers.getMapper(TransactionsResponseMapper.class).mapFromTppToFintech(transactionsResponse);
     }
 
-    public static InlineResponseBankInfo fromTppToFintech(
-        de.adorsys.opba.tppbankingapi.bankinfo.model.generated.BankInfoResponse bankInfoResponse
-    ) {
-        return Mappers.getMapper(BankInfoMapper.class).mapFromTppToFintech(
-            bankInfoResponse
-        );
+    public static InlineResponseBankInfo fromTppToFintech(de.adorsys.opba.tppbankingapi.bankinfo.model.generated.BankInfoResponse bankInfoResponse) {
+        return Mappers.getMapper(BankInfoMapper.class).mapFromTppToFintech(bankInfoResponse);
     }
 }

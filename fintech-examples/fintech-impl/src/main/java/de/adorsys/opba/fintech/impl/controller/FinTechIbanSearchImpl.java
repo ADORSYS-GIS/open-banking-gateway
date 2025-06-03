@@ -1,17 +1,16 @@
 package de.adorsys.opba.fintech.impl.controller;
 
 import de.adorsys.opba.fintech.api.model.generated.InlineResponseBankInfo;
-import de.adorsys.opba.fintech.api.resource.generated.FinTechIbanSearchApi;
 import de.adorsys.opba.fintech.api.model.generated.SearchBankInfoBody;
+import de.adorsys.opba.fintech.api.resource.generated.FinTechIbanSearchApi;
 import de.adorsys.opba.fintech.impl.service.IbanSearchService;
 import de.adorsys.opba.fintech.impl.service.SessionLogicService;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -23,19 +22,30 @@ public class FinTechIbanSearchImpl implements FinTechIbanSearchApi {
 
     @Override
     public ResponseEntity<InlineResponseBankInfo> getBankInfoByIban(
-            UUID xRequestID,
-            String xXsrfToken,
-            SearchBankInfoBody body
+        UUID xRequestID,
+        String xXsrfToken,
+        SearchBankInfoBody body
     ) {
+        log.info(
+            "Received request to get bank info by IBAN: {}",
+            body.getIban()
+        );
         if (!sessionLogicService.isSessionAuthorized()) {
-            log.warn("getBankInfoByIban failed: user is not authorized!");
+            log.info("getBankInfoByIban failed: user is not authorized!");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        InlineResponseBankInfo fintechModel = ibanSearchService.searchByIban(body.getIban());
+        InlineResponseBankInfo fintechModel = ibanSearchService.searchByIban(
+            body.getIban()
+        );
+        log.info(
+            "Returning bank info for IBAN {}: {}",
+            body.getIban(),
+            fintechModel
+        );
 
         return sessionLogicService.addSessionMaxAgeToHeader(
-                new ResponseEntity<>(fintechModel, HttpStatus.OK)
+            new ResponseEntity<>(fintechModel, HttpStatus.OK)
         );
     }
 }

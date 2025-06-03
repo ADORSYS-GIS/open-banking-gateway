@@ -23,6 +23,7 @@ public class IbanSearchService {
 
     @SneakyThrows
     public InlineResponseBankInfo searchByIban(String iban) {
+        log.info("Searching for bank info by IBAN: {}", iban);
         UUID.fromString(restRequestContext.getRequestId());
 
         V1BankinfoBody body = new V1BankinfoBody();
@@ -31,6 +32,7 @@ public class IbanSearchService {
         BankInfoResponse response = tppIbanSearchClient
             .getBankInfoByIban(body)
             .getBody();
+        log.info("Received bank info response for IBAN {}: {}", iban, response);
 
         return bankInfoMapper.mapFromTppToFintech(response);
     }
