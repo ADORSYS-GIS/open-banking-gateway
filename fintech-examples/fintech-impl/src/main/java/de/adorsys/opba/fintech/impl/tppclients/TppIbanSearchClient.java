@@ -1,14 +1,17 @@
 package de.adorsys.opba.fintech.impl.tppclients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.adorsys.opba.tppbankingapi.bankinfo.resource.generated.BankInfoApi;
+import de.adorsys.opba.tppbankingapi.bankinfo.resource.generated.TppBankInfoApi;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.cloud.openfeign.FeignClient;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
 @FeignClient(url = "${tpp.url}", name = "tppIbanSearch")
-public interface TppIbanSearchClient extends BankInfoApi {
+public interface TppIbanSearchClient extends TppBankInfoApi {
+
      default Optional<ObjectMapper> getObjectMapper() {
          return Optional.empty();
      }

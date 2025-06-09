@@ -12,7 +12,8 @@ import de.adorsys.opba.protocol.facade.config.auth.FacadeConsentAuthConfig;
 import de.adorsys.opba.protocol.facade.config.auth.UriExpandConst;
 import de.adorsys.opba.protocol.facade.services.authorization.PsuLoginService;
 import de.adorsys.opba.protocol.facade.services.psu.PsuAuthService;
-import de.adorsys.opba.tppauthapi.model.generated.LoginResponse;
+import de.adorsys.opba.tppauthapi.model.generated.
+        LoginResponse;
 import de.adorsys.opba.tppauthapi.model.generated.PsuAuthBody;
 import de.adorsys.opba.tppauthapi.resource.generated.PsuAuthenticationAndConsentApprovalApi;
 import de.adorsys.opba.tppauthapi.resource.generated.PsuAuthenticationApi;

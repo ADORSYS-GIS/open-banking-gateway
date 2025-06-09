@@ -5,11 +5,12 @@ import de.adorsys.opba.fintech.impl.controller.utils.RestRequestContext;
 import de.adorsys.opba.fintech.impl.mapper.BankInfoMapper;
 import de.adorsys.opba.fintech.impl.tppclients.TppIbanSearchClient;
 import de.adorsys.opba.tppbankingapi.bankinfo.model.generated.BankInfoResponse;
-import de.adorsys.opba.tppbankingapi.bankinfo.model.generated.V1BankinfoBody;
+import de.adorsys.opba.tppbankingapi.bankinfo.model.generated.SearchBankinfoBody;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,14 +27,34 @@ public class IbanSearchService {
         log.info("Searching for bank info by IBAN: {}", iban);
         UUID.fromString(restRequestContext.getRequestId());
 
-        V1BankinfoBody body = new V1BankinfoBody();
+        // Log the TPP Url being used
+        log.info("TPP URL configured: ${tpp.url}");
+
+        SearchBankinfoBody body = new SearchBankinfoBody();
         body.setIban(iban);
 
-        BankInfoResponse response = tppIbanSearchClient
-            .getBankInfoByIban(body)
-            .getBody();
-        log.info("Received bank info response for IBAN {}: {}", iban, response);
+        log.info("Calling TPP Client with body: {}", body);
 
-        return bankInfoMapper.mapFromTppToFintech(response);
+        // Get the full response first
+        try {
+            ResponseEntity<BankInfoResponse> fullResponse = tppIbanSearchClient.getBankInfoByIban(body);
+            log.info("Full response status: {}, headers: {}", fullResponse.getStatusCode(), fullResponse.getHeaders());
+
+            BankInfoResponse response = fullResponse.getBody();
+            log.info("Response body: {}", response);
+
+            if (response == null) {
+                log.error("Received null response from TPP client for IBAN: {}", iban);
+                return null;
+            }
+
+            InlineResponseBankInfo result = bankInfoMapper.mapFromTppToFintech(response);
+            log.info("Mapped result: {}", result);
+
+            return result;
+        } catch (Exception e) {
+            log.error("Error calling TPP Service: ", e);
+            throw e;
+        }
     }
 }
